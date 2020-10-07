@@ -2,9 +2,10 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Favorite Movies</title>
+  <meta charset="utf-8">xs
+  <title>Weather Dashboard </title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+  <link href="assests/style.css" rel="stylesheet">
   
 </head>
 
@@ -12,7 +13,7 @@
   <div class="container">
     <h1>Weather Dashboard</h1>
 
-    <!-- This form will be where users input data about the movies -->
+    
     <form id="city-form">
       <label for="city-input">Search for a City</label>
       <input type="text" id="city-input"><br>
@@ -20,23 +21,104 @@
       <!-- This button will trigger our AJAX call -->
       <input id="find-city" type="submit" value="City Search">
     </form>
+    
+    
+    
+    <div class="container-fluid">
+        <div class ="row">
+            <div class="col-sm">
+                <p class="previous-search">History</p>
+                <p class="last-city-one">One</p>
+                <p class="last-city-two">Two</p>
+                <p class="last-city-three">Three</p>
+                <p class="last-city-four">Four</p>
+            </div>
+
+            <div class ="col-md">
+              <div class ="card-current-header"></div>
+              <div class ="city-current"></div>
+              <div class ="main-temp">TEMP</div>
+              <div class ="hum-current">Humidity</div>
+              <div class ="uv0current">UV</div>
+            </div>
+        </div>
+    </div>
 
     <!-- We'll be dumping our JSON contents in here -->
     <div id="city-view"></div>
+    <div class ="container-fluid">
+            <div class="row">
+                <div class="col-sm" style="width: 18rem;">
+                    <div class="card-one-header">
+                    Date
+                </div>
+                    <ul class="list-group list-group-flush">
+                      <p>Temp</p>
+                    <li class="temp-one"></li>
+                      <p>Humidity</p>
+                    <li class="hum-one"></li>
+              
+                    </ul>
+                </div>
+          
+                <div class="col-sm" style="width: 18rem;">
+                <div class="card-two-header">
+                    Date
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <p>Temp</p>
+                    <li class="temp-two"></li>
+                    
+                      <p>Humidity</p>
+                    <li class="hum-two"></li>
+              
+                    </ul>
+                </div>
+                <div class="col-sm" style="width: 18rem;">
+                    <div class="card-three-header">
+                    Date
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <p>Temp</p>
+                    <li class="temp-three"></li>
+                    
+                      <p>Humidity</p>
+                    <li class="hum-three"></li>
+              
+                    </ul>
+                </div>
+                <div class="col-sm" style="width: 18rem;">
+                    <div class="card-four-header">
+                    Date
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <p>Temp</p>
+                    <li class="temp-four"></li>
+                   
+                      <p>Humidity</p>
+                    <li class="hum-four"></li>
+              
+                    </ul>
+                </div>
+                <div class="col-sm" style="width: 18rem;">
+                    <div class="card-five-header">
+                    Date
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <p>Temp</p>
+                    <li class="temp-five"></li>
+                    
+                      <p>Humidity</p>
+                    <li class="hum-five"></li>
+              
+                    </ul>
+                </div>
+             </div>
+           </div>
+        </div>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
@@ -53,8 +135,7 @@
         // Here we construct our URL
         var queryURL = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/forecast?q=" + city +"&appid=e5a5d4ba5ab1d31ad291b42947d0606b";  
 
-        // Write code between the dashes below to hit the queryURL with $ajax, then take the response data
-        // and display it in the div with an id of movie-view
+       
 
         // ------YOUR CODE GOES IN THESE DASHES. DO NOT MANUALLY EDIT THE HTML ABOVE.
 
@@ -62,11 +143,84 @@
           url: queryURL,
           method: "GET"
         }).then(function(response) {
-          console.log (response);
+          console.log(response); // what API call returns 
+          //temp for 5 day forcast in kelvin
+          console.log(response.list [0].main.temp +"F"); // temp in kelvin for current day
+          console.log(response.list [1].main.temp); // temp in kelvin for second day 
+          console.log(response.list [2].main.temp); // temp in kelvin for third day 
+          console.log(response.list [3].main.temp); // temp in kelvin for forth day 
+          console.log(response.list [4].main.temp); // temp in kelvin for fifth day 
+          console.log(response.list [5].main.temp); // temp in kelvin for sixth day 
+          //humidity for 5 day forcast 
+          console.log(response.list [0].main.humidity); //humidity for day one 
+          console.log(response.list [1].main.humidity); //humidity for day two 
+          console.log(response.list [2].main.humidity); //humidity for day three 
+          console.log(response.list [3].main.humidity); //humidity for day four 
+          console.log(response.list [4].main.humidity); //humidity for day five
+          console.log(response.list [5].main.humidity); //humidity for day six 
+          //date
+          console.log(response.list [0].dt_txt); 
+          console.log(response.list [1].dt_txt); 
+          console.log(response.list [2].dt_txt); 
+          console.log(response.list [3].dt_txt); 
+          console.log(response.list [4].dt_txt);  
+          console.log(response.list [5].dt_txt); 
+          //current date extras
+          console.log(response.list [0].wind.speed); //wind speed
+          console.log(response.list[0].weather[0].icon); // icon 
+          //I still need to add the UV index 
+
+          
+          
+        // var kelvTemp = parseInt(response.main.temp);
+        // var farTemp = (kelvTemp - 273.15) * 1.80 + 32;
+        // var tempDiv = $(".temp").text(farTemp);
 
 
-          // $("#city-view").text(JSON.stringify(response));
-        });
+          $(".card-current-header").text(response.list [0].dt_txt);
+          $(".card-one-header").text(response.list [1].dt_txt);
+          $(".card-two-header").text(response.list [2].dt_txt);
+          $(".card-three-header").text(response.list [3].dt_txt);
+          $(".card-four-header").text(response.list [4].dt_txt);
+          $(".card-five-header").text(response.list [5].dt_txt);
+          // Display the temp in the current temp area
+          var kelvTemp = parseInt(response.list [0].main.temp);
+          var farTemp = (kelvTemp - 273.15) * 1.80 + 32;
+          var tempDiv = $(".main-temp").text(farTemp.toFixed(1) + "F")
+          //Day One
+          var kelvTempOne=parseInt(response.list [1].main.temp);
+          var farTempOne = (kelvTempOne - 273.15) * 1.80 + 32;
+          $(".temp-one").text(farTempOne.toFixed(1) + "F");
+          //Day Two
+          var kelvTempTwo =parseInt(response.list [2].main.temp);
+          var farTempTwo = (kelvTempTwo - 273.15) * 1.80 + 32;
+          $(".temp-two").text(farTempTwo.toFixed(1) + "F");
+          //Day Three
+          var kelvTempThree =parseInt(response.list [3].main.temp);
+          var farTempThree = (kelvTempThree - 273.15) * 1.80 + 32;
+          $(".temp-three").text(farTempThree.toFixed(1) + "F");
+          //Day Four
+          var kelvTempFour = parseInt(response.list [4].main.temp);
+          var farTempFour = (kelvTempFour - 273.15) * 1.80 + 32;
+          $(".temp-four").text(farTempFour.toFixed(1) + "F");
+          //Day Five
+          kelvTempFive = parseInt(response.list [5].main.temp);
+          farTempFive = (kelvTempFive - 273.15) * 1.80 + 32;
+          $(".temp-five").text(farTempFive.toFixed(1) + "F");
+          //display humidity 
+          $(".hum-current").text(response.list [0].main.humidity);
+          $(".hum-one").text(response.list [1].main.humidity);
+          $(".hum-two").text(response.list [2].main.humidity);
+          $(".hum-three").text(response.list [3].main.humidity);
+          $(".hum-four").text(response.list [4].main.humidity);
+          $(".hum-five").text(response.list [5].main.humidity);
+          //curent day extras
+          // $(".uv-current").text(response.list [4].main.humidity);// needs a new API Call 
+          $(".city-current").text(response.city.name);
+
+
+
+      });
 
         // -----------------------------------------------------------------------
 
