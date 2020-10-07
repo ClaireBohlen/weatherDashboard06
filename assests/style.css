@@ -2,11 +2,16 @@
 
     padding: 60px;
     text-align: center;
-    background: #1abc9c;
+    background: #74d8f7;
     color: white;
     font-size: 30px;
       
 
+}
+
+h1 {
+    text-align: center;
+    color: turquoise;
 }
 #find-city{
     float: right;
@@ -27,4 +32,6 @@
     margin-bottom: 10px;
     margin-right: 10px;
     margin-left: 10px;
+    background-color: rgb(35, 5, 204);
+    color: white;
 }
