@@ -27,11 +27,7 @@
     <div class="container-fluid">
         <div class ="row">
             <div class="col-sm" id="buttons-view">
-                <!-- <p class="previous-search">History</p>
-                <p class="last-city-one">One</p>
-                <p class="last-city-two">Two</p>
-                <p class="last-city-three">Three</p>
-                <p class="last-city-four">Four</p> -->
+                
             </div>
 
             <div class ="col-sm">
@@ -124,7 +120,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript">
       // This .on("click") function will trigger the AJAX Call
-      var cities = ["Denver", "Atlanta", "Chicago"];
+    var cities = ["Denver", "Atlanta", "Chicago"];
+    function renderButtons(){
+
+      $("#buttons-view").empty();
+
+      for (var i = 0; i <cities.length; i++){
+
+        var a = $("<button>");
+        var b = $("<br>");
+        
+        a.addClass("newCity");
+
+        a.attr("data-name", cities[i]);
+
+        a.text(cities[i]);
+
+        $("#buttons-view").append(a).append(b);
+      }}
+
+      renderButtons();
+
      
      $("#find-city").on("click", function(event){
           event.preventDefault(); 
@@ -210,46 +226,114 @@
             $(".wind-speed").text(response.list [0].wind.speed + "MPH");
 
 
-
+          });
       });
    
-              function renderButtons(){
-
-                  $("#buttons-view").empty();
-
-                  for (var i = 0; i <cities.length; i++){
-
-                    var a = $("<button>");
-                    var b = $("<br>");
-                    
-                    a.addClass("newCity");
-
-                    a.attr("data-name", cities[i]);
-
-                    a.text(cities[i]);
-
-                    $("#buttons-view").append(a).append(b);
-                  }}
-                  
-                  renderButtons();
-
+             
 
                   $("#find-city").on("click", function(event){
-                  event.preventDefault();
+                    event.preventDefault();
 
-                  var newCity = $("#city-input").val().trim();
+                    var newCity = $("#city-input").val().trim();
 
-                  cities.push(newCity);
-                  renderButtons();
+                    cities.push(newCity);
+                    renderButtons();
 
-                  $(document).on("click", ".newCity");
+                    $(document).on("click", ".newCity");
 
 
-        });
-    
 
-      })
 
+                  });
+        function getCityData(){ ////grabs and displays data when you click one of the city buttons under the search bar
+            console.log($(this).text());
+            var cityTitle = $(this).text().replace(/ /g, "+");
+            var cityTitle2 = $(this).text(); //variable so the +'s don't show up when city nae is diplayed
+            console.log(cityTitle);
+            var queryURL = "https://cors-anywhere.herokuapp.com/http://api.openweathermap.org/data/2.5/forecast?q=" + cityTitle + "&appid=6e32b6954fb476d7d55a99a8027944ab";
+
+            $.ajax({
+            url: queryURL,
+            method: "GET"
+          }).then(function(response) {
+            console.log(response); // what API call returns 
+            //temp for 5 day forcast in kelvin
+            console.log(response.list [0].main.temp +"F"); // temp in kelvin for current day
+            console.log(response.list [7].main.temp); // temp in kelvin for second day 
+            console.log(response.list [2].main.temp); // temp in kelvin for third day 
+            console.log(response.list [3].main.temp); // temp in kelvin for forth day 
+            console.log(response.list [4].main.temp); // temp in kelvin for fifth day 
+            console.log(response.list [5].main.temp); // temp in kelvin for sixth day 
+            //humidity for 5 day forcast 
+            console.log(response.list [0].main.humidity); //humidity for day one 
+            console.log(response.list [7].main.humidity); //humidity for day two 
+            console.log(response.list [2].main.humidity); //humidity for day three 
+            console.log(response.list [3].main.humidity); //humidity for day four 
+            console.log(response.list [4].main.humidity); //humidity for day five
+            console.log(response.list [5].main.humidity); //humidity for day six 
+            //date
+            console.log(response.list [0].dt_txt); 
+            console.log(response.list [7].dt_txt); 
+            console.log(response.list [2].dt_txt); 
+            console.log(response.list [3].dt_txt); 
+            console.log(response.list [4].dt_txt);  
+            console.log(response.list [5].dt_txt); 
+            //current date extras
+            console.log(response.list [0].wind.speed); //wind speed
+            console.log(response.list[0].weather[0].icon); // icon 
+            //I still need to add the UV index 
+            // Date *** still figure out how to convert the date 
+            $(".card-current-header").text(response.list [0].dt_txt);
+            $(".card-one-header").text(response.list [7].dt_txt);
+            $(".card-two-header").text(response.list [15].dt_txt);
+            $(".card-three-header").text(response.list [23].dt_txt);
+            $(".card-four-header").text(response.list [31].dt_txt);
+            $(".card-five-header").text(response.list [39].dt_txt);
+            // Display the temp in the current temp area
+            var kelvTemp = parseInt(response.list [0].main.temp);
+            var farTemp = (kelvTemp - 273.15) * 1.80 + 32;
+            var tempDiv = $(".main-temp").text(farTemp.toFixed(1) + "°F")
+            //Day One
+            var kelvTempOne=parseInt(response.list [1].main.temp);
+            var farTempOne = (kelvTempOne - 273.15) * 1.80 + 32;
+            $(".temp-one").text(farTempOne.toFixed(1) + "°F");
+            //Day Two
+            var kelvTempTwo =parseInt(response.list [15].main.temp);
+            var farTempTwo = (kelvTempTwo - 273.15) * 1.80 + 32;
+            $(".temp-two").text(farTempTwo.toFixed(1) + "°F");
+            //Day Three
+            var kelvTempThree =parseInt(response.list [23].main.temp);
+            var farTempThree = (kelvTempThree - 273.15) * 1.80 + 32;
+            $(".temp-three").text(farTempThree.toFixed(1) + "°F");
+            //Day Four
+            var kelvTempFour = parseInt(response.list [31].main.temp);
+            var farTempFour = (kelvTempFour - 273.15) * 1.80 + 32;
+            $(".temp-four").text(farTempFour.toFixed(1) + "°F");
+            //Day Five
+            kelvTempFive = parseInt(response.list [38].main.temp);
+            farTempFive = (kelvTempFive - 273.15) * 1.80 + 32;
+            $(".temp-five").text(farTempFive.toFixed(1) + "°F");
+            //display humidity 
+            $(".hum-current").text(response.list [0].main.humidity + "% Humidity");
+            $(".hum-one").text(response.list [7].main.humidity + "% Humidity");
+            $(".hum-two").text(response.list [15].main.humidity + "% Humidity");
+            $(".hum-three").text(response.list [23].main.humidity + "% Humidity");
+            $(".hum-four").text(response.list [31].main.humidity + "% Humidity");
+            $(".hum-five").text(response.list [39].main.humidity + "% Humidity");
+            //curent day extras
+            // $(".uv-current").text(response.list [4].main.humidity);// needs a new API Call 
+            $(".city-current").text(response.city.name);
+            $(".wind-speed").text(response.list [0].wind.speed + "MPH");
+
+
+          });
+            
+          }
+          $(document).on("click", ".newCity", getCityData);
+
+        
+
+              
       
     </script>
   </div>
